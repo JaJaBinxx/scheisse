@@ -20,8 +20,12 @@ class OBJECT_OT_select_linked_nikita(Operator):
                 mesh_dict[key].append(o.name)
         for key in mesh_dict.keys():
             values = mesh_dict[key]
-            if len(values) > 0:
+            if len(values) == 1:
                 bpy.data.objects[values[0]].select_set(False)
+            else:
+                for value in values:
+                    bpy.data.objects[value].select_set(True)
+
         return {'FINISHED'}
 
 
