@@ -1,5 +1,6 @@
 import bpy
-from bpy.types import Menu, Operator
+from bpy.types import Menu, Operator, Mesh
+from collections import defaultdict
 
 
 class OBJECT_OT_select_linked_nikita(Operator):
@@ -11,13 +12,16 @@ class OBJECT_OT_select_linked_nikita(Operator):
     def execute(self, context):
         objs = context.selected_objects
 
-        for ob in objs:
-            bpy.context.view_layer.objects.active = ob
-            bpy.ops.object.select_linked(extend=True, type='OBDATA')
+        mesh_dict = defaultdict(list)
 
-        for ob in objs:
-            bpy.context.view_layer.objects.active = ob
-            bpy.context.active_object.select_set(False)
+        for o in objs:
+            if isinstance(o.data, Mesh):
+                key = o.data.name
+                mesh_dict[key].append(o.name)
+        for key in mesh_dict.keys():
+            values = mesh_dict[key]
+            if len(values) > 0:
+                bpy.data.objects[values[0]].select_set(False)
         return {'FINISHED'}
 
 

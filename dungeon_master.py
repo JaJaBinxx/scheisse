@@ -4,7 +4,7 @@ from dm.select_instances import OBJECT_OT_select_linked_nikita, VIEW3D_MT_select
 from bpy.utils import register_class, unregister_class
 
 bl_info = {
-    "name": "DUNGEON MASTER",
+    "name": "DUNGEON MASTER ",
     "description": "",
     "author": "me",
     "version": (2, 28),
