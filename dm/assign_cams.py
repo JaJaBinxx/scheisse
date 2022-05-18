@@ -3,6 +3,12 @@ import bpy
 import os
 
 
+def replace_last(s: str):
+    result = s.rpartition('_')
+    t = '.'.join([result[0], result[2]])
+    return t
+
+
 class AssignCamsOperator(Operator):
     bl_idname = "wm.yes_yes_assign_cams"
     bl_label = "Cum"
@@ -14,7 +20,7 @@ class AssignCamsOperator(Operator):
         for o in objs:
             if o.type == 'CAMERA':
                 name = o.name
-                name = name[:-4] + '.' + name[-3:]
+                name = replace_last(name)
                 file_path = os.path.join(img_dir, name)
                 if os.path.isfile(file_path):
                     img = bpy.data.images.load(file_path)
